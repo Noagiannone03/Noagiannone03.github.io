@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exemple d'iframe avec URL encodée</title>
+  </head>
+  <body>
+
+    <script>
+      
+      //bloque de texte a integrer
+      const message = "dans 20% des cas c'est utile.Les inlineframes sont utiles si vous souhaitez intégrer des éléments de sources externes sur votre propre site. Grâce aux iframes, l’utilisateur n’est pas envoyé sur l’autre domaine et peut naviguer en toute tranquillité sur votre site ce qui augmente grandement la convivialité. L’intégration peut en outre comporter des avantages techniques. Le contenu de l’iframe est chargé indépendamment du reste du site internet. L’utilisateur peut ainsi accéder aux contenus même si tous les éléments de la page ne sont pas encore chargés.Les iframes sont toutefois de moins en moins utilisées, car elles présentent également certains inconvénients. Les éléments intégrés ne sont en effet pas traités de façon pertinente par les moteurs de recherche. Ceci peut impacter l’optimisation SEO et donc le référencement du site internet. Ce qui est nettement plus problématique, c’est toutefois le risque de sécurité lié aux iframes : lorsque l’on intègre des contenus externes, ces derniers peuvent avoir un effet négatif sur le système de l’utilisateur ou l’utilisateur lui-même. Le contenu de l’iframe peut par exemple contenir un plugin nuisible ou effectuer de l’hameçonnage sans que vous en ayez conscience en tant qu’exploitant du site Internet.";
+      
+      //couleur de l'arrière plan a appliquer
+      const backgroundcolor = "#ffffff";
+      
+      //couleur du texte
+      const textcolor = "#000000";
+      
+      //police d'écriture du texte
+      const fontfamily = "Arial";
+
+      const encodedMessage = encodeURIComponent(message); // encoder le message
+      const encodedbackgroundcolor = encodeURIComponent(backgroundcolor);
+      const encodedtextcolor = encodeURIComponent(textcolor);
+      const encodedfontfamily = encodeURIComponent(fontfamily);
+
+      const url = `iframepage.html?message=${encodedMessage}&backgroundcolor=${encodedbackgroundcolor}&textcolor=${encodedtextcolor}&fontfamily=${encodedfontfamily}`; // créer l'URL avec le texte encodé
+
+      const iframe = document.createElement("iframe"); // créer un élément iframe
+      iframe.src = url; // définir l'URL de l'iframe
+      iframe.width = "20%"; // définir la largeur de l'iframe
+      iframe.height = "500px"; // définir la hauteur de l'iframe
+      iframe.setAttribute("scrolling", "no"); // désactiver le défilement
+
+      document.body.appendChild(iframe); // ajouter l'iframe à la page
+
+    </script>
+  </body>
+</html>
+
