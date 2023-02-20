@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="iframepagestyle.css">
+  </head>
+	<title>Page 2</title>
+
+</head>
+
+<body>
+
+<script>
+
+
+// Récupérer le paramètre d'URL nommé "message"
+
+const message = "bonjour et bienvenu a tous.aujourd'hui nous allons parler de chat gpt et de sa puissance.en effet cet outil est d'un puissance rocampbolesque puisque qu'il peut tout faire de la plus peitite chose jusqu'au relveé de carte bancaire.c'est incroyable";
+const backgroundcolorvar = "#ffffff;
+const textcolorvar = "#000000;
+const fontfamilyvar = "Arial";
+
+document.body.style.backgroundColor = backgroundcolorvar;
+  // Récupérer le width et le height de la page
+var pageWidth = window.innerWidth;
+var pageHeight = window.innerHeight;
+
+// Créer l'élément d'image
+var image = document.createElement("img");
+
+// Définir l'URL de l'image et d'autres attributs
+image.setAttribute("src", "this is mine.png");
+image.setAttribute("id", "heart");
+image.setAttribute("class", "image");
+
+if (screen.width > 768) {
+  //ordinateur
+  image.setAttribute("width","280px")
+  image.setAttribute("height","280px")
+} else if (screen.width > 480) {
+  //tablette
+  image.setAttribute("width","100px")
+  image.setAttribute("height","100px")
+} else {
+  //téléphone
+  image.setAttribute("width","15px")
+  image.setAttribute("height","15px")
+}
+// Ajouter l'élément d'image à la page
+document.body.appendChild(image);
+
+// Centrer l'image dans la page
+var imageWidth = image.offsetWidth;
+var imageHeight = image.offsetHeight;
+
+var imageX = (pageWidth - imageWidth) / 2;
+var imageY = (pageHeight - imageHeight) / 2;
+
+image.style.marginLeft = imageX + "px";
+image.style.marginTop = imageY + "px";
+
+
+
+  // timer pour la page de chargement
+      setTimeout(function() {
+        image.style.opacity = 1;
+
+        function fadeOut() {
+          image.style.opacity -= 0.1;
+          if (image.style.opacity <= 0) {
+            image.style.display = "none";
+          } else {
+            setTimeout(fadeOut, 90);
+          }
+                }
+                fadeOut();
+
+                setTimeout(function() {
+                  suitecode()
+
+                }, 1000);
+                
+      }, 5000);
+
+function suitecode (){
+
+
+// Créer un élément canvas
+const canvas = document.createElement('canvas');
+
+// Adapter la taille du canvas à celle de l'iframe
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight - 60;
+
+// Déterminer la police d'écriture en fonction de l'écran
+let fontSize;
+if (window.innerWidth < 600) {
+  fontSize = 14;
+} else if (window.innerWidth < 960) {
+  fontSize = 16;
+} else {
+  fontSize = 19;
+}
+
+// Récupérer le contexte du canvas
+const context = canvas.getContext('2d');
+
+// Appliquer la police d'écriture
+
+context.fillStyle = textcolorvar;
+context.font = "normal " + fontSize + "px " + fontfamilyvar;
+
+// Déterminer l'espacement entre les lettres et les mots
+const letterSpacing = context.measureText(' ').width * 0.2;
+context.letterSpacing = letterSpacing;
+
+// Déterminer l'espacement entre les lignes
+const lineHeight = fontSize * 1.5;
+
+// Découper le texte en lignes pour qu'il tienne dans l'iframe
+const lines = [];
+const words = message.split(' ');
+let line = '';
+for (let i = 0; i < words.length; i++) {
+  const testLine = line + words[i] + ' ';
+  const metrics = context.measureText(testLine);
+  const lineWidth = metrics.width;
+  if (lineWidth > window.innerWidth - 2 * letterSpacing) {
+    lines.push(line);
+    line = words[i] + ' ';
+  } else {
+    line = testLine;
+  }
+}
+lines.push(line);
+
+// Dessiner le texte sur le canvas
+context.fillStyle = '#000';
+let y = fontSize;
+for (let i = 0; i < lines.length; i++) {
+  context.fillText(lines[i], letterSpacing, y);
+  y += lineHeight;
+}
+
+// Créer une image à partir du canvas
+const image = new Image();
+image.src = canvas.toDataURL();
+
+// Ajouter l'image sur la page
+document.body.style.margin = '0';
+document.body.appendChild(image);
+
+// Crée un élément div avec la classe "container"
+const containerDiv = document.createElement("div");
+containerDiv.className = "container";
+
+// Crée un élément label
+const label = document.createElement("label");
+
+// Crée un élément input de type checkbox avec la classe "play-btn" et l'ID "voicebtn"
+const input = document.createElement("input");
+input.type = "checkbox";
+input.className = "play-btn";
+input.id = "voicebtn";
+
+// Crée un élément div avec la classe "play-icon"
+const playIconDiv = document.createElement("div");
+playIconDiv.className = "play-icon";
+
+// Crée un élément div avec la classe "pause-icon"
+const pauseIconDiv = document.createElement("div");
+pauseIconDiv.className = "pause-icon";
+
+// Ajoute les éléments enfants au label
+label.appendChild(input);
+label.appendChild(playIconDiv);
+label.appendChild(pauseIconDiv);
+
+// Ajoute le label à l'élément div "container"
+containerDiv.appendChild(label);
+
+// Ajoute l'élément div "container" au corps de la page
+document.body.appendChild(containerDiv);
+
+// Définir la marge gauche et supérieure de l'élément "container"
+var widthforbutton = window.innerWidth;
+widthfinal = widthforbutton/3;
+containerDiv.style.marginLeft = widthfinal+ "px";
+containerDiv.style.marginTop = "20px";
+
+// Ajouter un écouteur de clic au bouton "play-btn"
+const playBtn = document.querySelector('.play-btn');
+playBtn.addEventListener('click', function() {
+  if (window.speechSynthesis.speaking) {
+    stopText();
+    
+  } else {
+    readText();
+   
+  }
+});
+
+
+if (window.self === window.top) {
+  window.location.replace("erroriframepage.html");
+}
+
+
+
+// Fonction de lecture à haute voix du texte
+function readText() {
+  const msg = new SpeechSynthesisUtterance(message);
+  window.speechSynthesis.speak(msg);
+}
+
+// Fonction d'arrêt de la lecture à haute voix du texte
+function stopText() {
+  window.speechSynthesis.cancel();
+}
+
+}
+</script>
+
+
+
+    
+</body>
+</html>
